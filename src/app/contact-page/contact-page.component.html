@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="en">
-<div  class="div1">
-    <div class="div2">
-        <div class="div3">
+<div  class="contactForm">
+    <div>
+        <div>
             <h1>Contact Form</h1>
               <form (ngSubmit)='addContact()'>
                 <input placeholder="Add Contact First Name" name="fname" [(ngModel)]="contact.fname">
@@ -22,15 +22,18 @@
         <div>
             <p></p>
             <div> <h2>Contact List</h2></div>
-            <div *ngFor="let contact of contacts$ | async; let i=index">
+            <div class= contactList *ngFor="let contact of contacts$ | async; let i=index">
               <span >{{i+1}}.</span> {{contact.fname}} {{contact.lname}}
-                    <div *ngIf="isShown[i] == true">
+                    <div *ngIf="isShown[i] == true; else hide">
                         <p></p>
-                        <p>{{contact.phone}}</p>
-                        <p>{{contact.email}}</p>
-                        <p>{{contact.address}}</p>
+                        <p>Phone: {{contact.phone}}</p>
+                        <p>Email: {{contact.email}}</p>
+                        <p>Address: {{contact.address}}</p>
+                        <button class="button" (click)="toggleShow(i)" type="checkbox">Hide details</button>
                     </div>
-                  <button (click)="toggleShow(i)" type="checkbox">Show details</button>
+                  <ng-template #hide>
+                    <button class="button" (click)="toggleShow(i)" type="checkbox">Show details</button>
+                  </ng-template>            
                 </div>
             </div>
         </div>
